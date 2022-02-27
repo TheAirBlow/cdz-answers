@@ -1,18 +1,235 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/open-sans.min.css");
 
 html {
   position: relative;
   min-height: 100%;
+  font-size: 16px;
+}
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.lds-ellipsis {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  height: 80px;
+  width: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+.centered-div {
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
 body {
   margin-bottom: 60px;
+}
+
+.mainbox {
+  transition-property: border, background-color;
+  transition-timing-function: ease-out;
+  transition-duration: 100ms;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.mainbox-normal {
+  border: 4px solid #292929;
+  background: #383838;
+}
+
+.mainbox-clicked {
+  border: 4px solid limegreen;
+  background: #2d312d;
+}
+
+.warnbox {
+  border: 4px solid #960000;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background: red;
+  padding: 20px;
+}
+
+.box {
+  border: 4px solid #292929;
+  border-radius: 20px;
+  background: #383838;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.infobox {
+  border: 4px solid #918700;
+  border-radius: 20px;
+  background: #e1c601;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.centered-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+table {
+  margin-top: 6px;
+  border-collapse: collapse;
+}
+
+.block {
+  display: inline-block;
+  padding: 10px;
+}
+
+.bg-neardark {
+  background-color: #36393b;
+}
+
+footer {
+  padding-top: 8px;
+  position: fixed;
+  height: 40px;
+  width: 100%;
+  bottom: 0;
+}
+
+nav {
+  height: 60px;
+}
+
+vim-dnd-image-set-drag {
+  border: 4px solid #292929;
+  justify-content: center;
+  background: #303030;
+  border-radius: 5px;
+  margin-top: 6px;
+  display: flex;
+  padding: 5px;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.debug-text {
+  color: #676767
+}
+
+vim-input, vim-select, vim-test, math-input-answer {
+  border: 4px solid #292929;
+  display: inline-block;
+  background: #303030;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  margin-right: 6px;
+  margin-left: 6px;
+  padding: 5px;
+}
+
+.left-margin {
+  margin-left: 6px;
+}
+
+vim-math {
+  margin-right: 4px;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+vim-test {
+  display: grid;
+}
+
+vim-instruction, vim-groups-row, div.elements {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.inputbox {
+  width: 45%;
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.sendbutton {
+  font-size: 18px;
+  background-color: #008CBA;
+  color: black; border-radius: 10px;
+  border: 2px solid #008CBA;
+  padding-right: 10px;
+  padding-left: 10px;
 }

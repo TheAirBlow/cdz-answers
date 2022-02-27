@@ -1,8 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Главная Страница";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="text-white">Добро пожаловать на наш сайт!</h1>
+    <h4 class="text-white">Наш сайт поддерживает следующие ЦДЗ:</h4>
+    <table class="centered-table">
+        <tr>
+            <th class="text-white">Сайт</th>
+            <th class="text-white">Метод</th>
+            <th class="text-white">Информация</th>
+        </tr>
+        <tr>
+            <th class="text-white">Учи.ру</th>
+            <th class="text-white">Плагин Firefox</th>
+            <th class="text-white">
+                Туториал и вся информация
+                <a href="https://github.com/TheAirBlow/HackPack/tree/main/uchihack"
+                   class="text-white">тут</a>.
+            </th>
+        </tr>
+        <tr>
+            <th class="text-white">РЭШ</th>
+            <th class="text-white">Плагин Firefox</th>
+            <th class="text-white">
+                Туториал и вся информация
+                <a href="https://github.com/TheAirBlow/HackPack/tree/main/rehack"
+                   class="text-white">тут</a>.</th>
+        </tr>
+        <tr>
+            <th class="text-white">SkySmart</th>
+            <th class="text-white">Этот сайт</th>
+            <th class="text-white">Получение ответов используя API</th>
+        </tr>
+        <tr>
+            <th class="text-white">Skills4u</th>
+            <th class="text-white">Этот сайт</th>
+            <th class="text-white">Получение ответов из JavaScript переменной</th>
+        </tr>
+    </table>
+    <p class="text-white">Просто скопируйте ссылку суда, а мы выполним всю остальную работу:</p>
+    <form action="/API/LinkRedirect">
+        <input type="text" id="link" name="link" class="inputbox"><br/>
+        <input type="submit" value="Получить ответы!" class="sendbutton">
+    </form>
 </div>

@@ -1,0 +1,372 @@
+﻿using System.Net;
+using System.Text;
+using System.Xml;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Spectre.Console;
+
+namespace TheAirBlow.Solver.Library
+{
+    public static class SkySmart
+    {
+        /// <summary>
+        /// Exercise data
+        /// </summary>
+        public class ExerciseData
+        {
+            public string Uuid;
+            public string Data;
+            public string Title;
+            public bool IsRandom;
+            public bool IsInteractive;
+        }
+        
+        /// <summary>
+        /// Information JSON
+        /// </summary>
+        public class UserInformation
+        {
+            [JsonProperty("name")] public string Name;
+            [JsonProperty("surname")] public string Surname;
+        }
+        
+        /// <summary>
+        /// XML content JSON
+        /// </summary>
+        public class ExerciseXml
+        {
+            public XmlDocument XmlContent;
+            [JsonProperty("uuid")] public string Uuid;
+            [JsonProperty("title")] public string Title;
+            [JsonProperty("content")] public string Content;
+            [JsonProperty("isRandom")] public bool IsRandom;
+            [JsonProperty("isInteractive")] public bool IsInteractive;
+            [JsonProperty("stepRevId")] public int ExerciseIdentifier;
+        }
+        
+        /// <summary>
+        /// Exercises' UUIDs JSON
+        /// </summary>
+        public class ExerciseMeta
+        {
+            public class MetaClass {
+                public class TitleClass {
+                    [JsonProperty("title")] public string Title;
+                }
+
+                [JsonProperty("stepUuids")] public string[] Uuids;
+                [JsonProperty("subject")] public TitleClass Subject;
+                [JsonProperty("teacher")] public UserInformation TeacherInformation;
+                [JsonProperty("stepsMeta")] public Dictionary<string, TitleClass> StepsMeta;
+                
+            }
+
+            [JsonProperty("meta")] public MetaClass Meta;
+        }
+        
+        /// <summary>
+        /// Login/password pair JSON
+        /// </summary>
+        private class LoginPasswordPair
+        {
+            [JsonProperty("phoneOrEmail")] public string Login;
+            [JsonProperty("password")] public string Password;
+        }
+        
+        private const string LoginRequest = "https://api-edu.skysmart.ru/api/v2/auth/auth/student";
+        private const string Xml = "https://api-edu.skysmart.ru/api/v1/content/step/load?stepUuid=";
+        private const string Information = "https://api-edu.skysmart.ru/api/v1/user/config";
+        private const string Preview = "https://api-edu.skysmart.ru/api/v1/task/preview";
+        public static string Token = "";
+
+        /// <summary>
+        /// Get information about user
+        /// </summary>
+        /// <returns>Information</returns>
+        public static UserInformation GetInformation()
+        {
+            using var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {Token}");
+            var answer = client.DownloadString(Information);
+            return JsonConvert.DeserializeObject<UserInformation>(answer);
+        }
+
+        /// <summary>
+        /// Authenticate (login)
+        /// </summary>
+        public static void Authenticate(string login, string password)
+        {
+            using var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add(HttpRequestHeader.Accept, "application/json; charset=UTF-8");
+            var data = JsonConvert.SerializeObject(new LoginPasswordPair {
+                Password = password,
+                Login = login
+            });
+            var answer = client.UploadString(LoginRequest, "POST", data);
+            dynamic json = JObject.Parse(answer);
+            Token = json.jwtToken;
+        }
+
+        /// <summary>
+        /// Get all exercises' XML UUIDs
+        /// </summary>
+        /// <param name="taskHash">Task Hash</param>
+        /// <returns>UUIDs</returns>
+        public static ExerciseMeta GetAnswerXmlsUuids(string taskHash)
+        {
+            using var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {Token}");
+            var data = "{\"taskHash\":\"" + taskHash + "\"}";
+            var answer = client.UploadString(Preview, "POST", data);
+            var json = JsonConvert.DeserializeObject<ExerciseMeta>(answer);
+            return json;
+        }
+
+        /// <summary>
+        /// Get answer XML from UUID
+        /// </summary>
+        /// <param name="uuid">UUID</param>
+        /// <param name="uuids">UUIDs Meta</param>
+        /// <returns>Answer XML</returns>
+        public static ExerciseXml GetAnswerXml(string uuid, ExerciseMeta uuids)
+        {
+            using var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {Token}");
+            var answer = client.DownloadString(Xml + uuid);
+            var json = JsonConvert.DeserializeObject<ExerciseXml>(answer);
+            var content = json.Content.Replace(
+                "<br>", "<br/>");
+            var doc = new XmlDocument();
+            doc.LoadXml(content);
+            json.XmlContent = doc;
+            json.Title = uuids.Meta.StepsMeta[uuid].Title;
+            json.Uuid = uuid;
+            return json;
+        }
+
+        /// <summary>
+        /// Answers with metadata
+        /// </summary>
+        public class AnswersAndMeta
+        {
+            public List<ExerciseData> Answers = new();
+            public string SubjectName;
+            public string TeacherName;
+        }
+
+        /// <summary>
+        /// Get answers
+        /// </summary>
+        /// <param name="taskHash">Task Hack</param>
+        /// <returns>All answers pairs</returns>
+        public static AnswersAndMeta GetAnswers(string taskHash)
+        {
+            var uuids = GetAnswerXmlsUuids(taskHash);
+            var data = new AnswersAndMeta {
+                TeacherName = $"{uuids.Meta.TeacherInformation.Surname} {uuids.Meta.TeacherInformation.Name}",
+                SubjectName = uuids.Meta.Subject.Title
+            };
+            
+            for (var i = 0; i < uuids.Meta.Uuids.Length; i++) {
+                var uuid = uuids.Meta.Uuids[i];
+                var xml = GetAnswerXml(uuid, uuids);
+                var root = xml.XmlContent["div"];
+                var title = $"Задание №{i + 1}: {xml.Title}";
+                // https://edu.skysmart.ru/student/pidibehaxa
+                
+                #region Image Drag&Drop Question
+                foreach (XmlNode k in root?.SelectNodes($"//vim-dnd-image-set")!) {
+                    var drags = k["vim-dnd-image-set-drags"];
+                    var nodes = k.SelectNodes("//vim-dnd-image-set-drop");
+                    for (var h = 0; h < nodes!.Count; h++) {
+                        var item = (XmlElement)nodes[h]!;
+                        var ids = item.GetAttribute("drag-ids").Split(',');
+                        var list2 = ids.Select(id => (XmlElement)drags?
+                            .SelectSingleNode($"//*[@answer-id='{id}']")!).ToList();
+                        var div = xml.XmlContent.CreateElement("div");
+                        var img = xml.XmlContent.CreateElement("img");
+                        img.SetAttribute("src", item.GetAttribute("image"));
+                        div.SetAttribute("class", "block");
+                        div.AppendChild(img); div.InnerXml += "<br/>";
+                        for (var j = 0; j < list2.Count; j++) {
+                            list2[j].SetAttribute("class", 
+                                "block-text");
+                            div.AppendChild(list2[j]);
+                            if (j != list2.Count - 1)
+                                div.InnerXml += " или ";
+                        }
+
+                        div.InnerXml = $"<b>{div.InnerXml}</b>";
+                        k.AppendChild(div);
+                    }
+                }
+                #endregion
+                #region Text Drag&Drop Question
+                foreach (XmlNode k in root?.SelectNodes($"//vim-dnd-text")!) {
+                    var drags = k["vim-dnd-text-drags"];
+                    var nodes = k.SelectNodes("//vim-dnd-text-drop");
+                    for (var h = 0; h < nodes!.Count; h++) {
+                        var item = nodes[h];
+                        var ids = item!.Attributes?["drag-ids"]!.InnerText.Split(',');
+                        var list2 = ids!.Select(id => drags?.SelectSingleNode(
+                            $"//*[@answer-id='{id}']")!).ToList();
+                        
+                        for (var j = 0; j < list2.Count; j++) {
+                            item.AppendChild(list2[j]);
+                            if (j != list2.Count - 1)
+                                item.InnerXml += " или ";
+                        }
+
+                        item.InnerXml = $"<b>{item.InnerXml}</b>";
+                    }
+                }
+                #endregion
+                #region Strike Out Question
+                foreach (XmlElement k in root.SelectNodes($"//vim-strike-out")!) {
+                    var delimiter = k.GetAttribute("delimiter");
+                    foreach (XmlNode l in k.SelectNodes("vim-strike-out-item[@striked='true']")!)
+                        l.InnerXml = $"<s>{l.InnerXml}</s>";
+
+                    for (var j = 0; j < k.ChildNodes.Count; j++) {
+                        var node = (XmlElement)k.ChildNodes[j]!;
+                        if (j != k.ChildNodes.Count - 1)
+                            node.InnerXml += delimiter;
+                    }
+                }
+                #endregion
+                #region Math Input Question
+                foreach (XmlNode k in root.SelectNodes($"//math-input")!) {
+                    var first = k.FirstChild!;
+                    k.RemoveAll();
+                    k.AppendChild(first);
+                }
+                #endregion
+                #region Drag&Drop Question
+                foreach (XmlNode k in root.SelectNodes($"//vim-dnd-group")!) {
+                    var drags = k["vim-dnd-group-drags"];
+                    var newNode = xml.XmlContent.CreateElement(
+                        "div", k.NamespaceURI);
+                    var nodes = k.SelectNodes("//vim-dnd-group-item");
+                    for (var h = 0; h < nodes!.Count; h++) {
+                        var item = nodes[h];
+                        var elements = xml.XmlContent.CreateElement(
+                            "div", newNode.NamespaceURI);
+                        elements.SetAttribute("class", "elements");
+                        var ids = item!.Attributes?["drag-ids"]!.InnerText.Split(',');
+                        var list2 = ids!.Select(id => drags?.SelectSingleNode(
+                            $"//*[@answer-id='{id}']")!).ToList();
+                        elements.InnerText = $"{item.InnerText} ← ";
+                        for (var j = 0; j < list2.Count; j++) {
+                            var xmlNode = list2[j];
+                            try {
+                                ((XmlElement)xmlNode).SetAttribute(
+                                    "class", "left-margin");
+                            } catch { /* Ignore */ }
+                            elements.AppendChild(xmlNode);
+                            if (j != list2.Count - 1)
+                                elements.InnerText += " / ";
+                        }
+
+                        newNode.AppendChild(elements);
+                    }
+
+                    k.AppendChild(newNode);
+                }
+                #endregion
+                #region Select Question
+                foreach (XmlNode k in root.SelectNodes($"//vim-select")!) {
+                    var first = k.FirstChild?.SelectSingleNode("*[@correct='true']");
+                    k.FirstChild?.RemoveAll();
+                    k.AppendChild(first!);
+                }
+                #endregion
+                #region Groups Question
+                foreach (XmlNode k in root?.SelectNodes($"//vim-groups")!)
+                foreach (XmlNode vim in k?.ChildNodes!) {
+                    var first = Encoding.ASCII.GetString(Convert.FromBase64String
+                        (vim.ChildNodes[0]?.Attributes?["text"]?.InnerText!));
+                    var second = Encoding.ASCII.GetString(Convert.FromBase64String
+                        (vim.ChildNodes[1]?.Attributes?["text"]?.InnerText!));
+                    vim.InnerXml = ""; vim.InnerText = $"{first} → {second}";
+                }
+                #endregion
+                #region Input Question
+                foreach (XmlNode k in root.SelectNodes($"//vim-input")!) {
+                    var first = k.FirstChild?.FirstChild!;
+                    k.FirstChild?.RemoveAll();
+                    k.AppendChild(first);
+                }
+                #endregion
+                #region Test Question
+                foreach (XmlNode k in root.SelectNodes($"//vim-test")!) {
+                    var nodes = k.ChildNodes;
+                    for (var l = 0; l < nodes.Count; l++) {
+                        var text = nodes[l]?["vim-test-question-text"];
+                        text!.InnerXml = $"❓ {text.InnerXml}<br/>";
+                        foreach (XmlElement j in nodes[l]?["vim-test-answers"]?.ChildNodes!) {
+                            var original = j.InnerXml; j.InnerXml = "";
+                            var checkbox = xml.XmlContent.CreateElement("input");
+                            if (j.HasAttribute("correct") && j.GetAttribute(
+                                    "correct") == "true")
+                                checkbox.SetAttribute("checked", "true");
+                            checkbox.SetAttribute("onclick", "return false;");
+                            checkbox.SetAttribute("type", "checkbox");
+                            j.AppendChild(checkbox); j.InnerXml += $" {original}<br/>";
+                        }
+
+                        if (l != nodes.Count - 1)
+                            nodes[l]!.InnerXml += "<br/>";
+                    }
+                }
+                #endregion
+
+                // Slightly refactor the XML
+                foreach (var j in new[] { "vim-math", "math-input-answer", "vim-groups-row" })
+                foreach (XmlNode k in root.SelectNodes($"//{j}")!)
+                    k.InnerText = $"\\({k.InnerText}\\)";
+
+                foreach (XmlElement k in root.SelectNodes($"//vim-text")!) {
+                    switch (k.GetAttribute("type")) {
+                        case "strong":
+                            k.InnerXml = $"<b>{k.InnerXml}</b>";
+                            break;
+                        case "em":
+                            k.InnerXml = $"<em>{k.InnerXml}</em>";
+                            break;
+                        default:
+                            AnsiConsole.MarkupLine($"[yellow]Found new vim-text type: {k.GetAttribute("type")}[/]");
+                            break;
+                    }
+                }
+                
+                foreach (XmlNode k in root.SelectNodes($"//vim-video")!)
+                    k.InnerText = "[Тут должно быть видео]";
+                
+                foreach (XmlNode k in root.SelectNodes($"//vim-iframe")!)
+                    k.InnerText = "[Тут находится медиа-контент или игра]";
+                
+                foreach (XmlNode k in root.SelectNodes($"//vim-image")!)
+                    k.InnerText = "[Тут должна быть картинка]";
+                
+                foreach (var j in new[] { "vim-dnd-text-drags", "vim-dnd-group-drags", 
+                             "vim-dnd-group-groups", "vim-instruction", "vim-source-list",
+                             "vim-dnd-image-set-drags", "vim-dnd-image-set-images" })
+                foreach (XmlNode k in root.SelectNodes($"//{j}")!)
+                    k.ParentNode?.RemoveChild(k);
+                    
+                data.Answers.Add(new ExerciseData {
+                    IsInteractive = xml.IsInteractive,
+                    IsRandom = xml.IsRandom,
+                    Data = root.InnerXml,
+                    Uuid = xml.Uuid,
+                    Title = title
+                });
+            }
+            
+            return data;
+        }
+    }
+}
