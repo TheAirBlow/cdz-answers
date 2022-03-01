@@ -7,7 +7,7 @@ using Jint.Native.Array;
 namespace TheAirBlow.Solver.Library;
 
 // ReSharper disable once InconsistentNaming
-public class Skills4u
+public static class Skills4u
 {
     /// <summary>
     /// Question and Answer Pair
@@ -42,11 +42,9 @@ public class Skills4u
         var lesson = (ArrayInstance)js?.EvaluateScript(document, 
             "window.lesson")!;
         var pairs = new List<QuestionAnswerPair>();
-        var list = lesson?.GetOwnProperties().Select(
-            p => p.Value.Value)!;
-        var jsValues = list as JsValue[] ?? list?.ToArray();
+        var jsValues = AngleHelper.NativeToArray(lesson);
         for (var i = 0; i < jsValues!.Count() - 1; i++) {
-            var item = jsValues[i];
+            var item = jsValues![i];
             var obj = item.AsObject();
             var question = $"<root>{obj.GetProperty("question").Value.AsString()}</root>";
             var answer = $"<root>{obj.GetProperty("answer").Value.AsString()}</root>";

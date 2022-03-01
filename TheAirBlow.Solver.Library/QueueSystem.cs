@@ -7,7 +7,7 @@ public class QueueSystem
     public static QueueSystem Instance;
     
     // ReSharper disable once InconsistentNaming
-    public enum Website { SkySmart, Skills4u }
+    public enum Website { SkySmart, Skills4u, Saharina, TestEdu }
     public enum Status { Waiting, Solving, Done }
 
     public class QueueItem : ICloneable
@@ -57,13 +57,21 @@ public class QueueSystem
                 AnsiConsole.MarkupLine($"[yellow]Website: {item.Website}[/]");
                 AnsiConsole.MarkupLine($"[yellow]Input: {item.SolverInput}[/]");
                 try {
-                    switch (item!.Website) {
+                    switch (item.Website) {
                         case Website.Skills4u:
                             item.SolverOutput = await Skills4u
                                 .GetAnswers(item.SolverInput);
                             break;
                         case Website.SkySmart:
                             item.SolverOutput = SkySmart
+                                .GetAnswers(item.SolverInput);
+                            break;
+                        case Website.Saharina:
+                            item.SolverOutput = await Saharina
+                                .GetAnswersXml(item.SolverInput);
+                            break;
+                        case Website.TestEdu:
+                            item.SolverOutput = await TestEdu
                                 .GetAnswers(item.SolverInput);
                             break;
                     }

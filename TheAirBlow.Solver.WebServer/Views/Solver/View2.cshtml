@@ -2,6 +2,7 @@
     ViewData["Title"] = "SkySmart";
 }
 
+<link rel="icon" href="https://cdn-user49501.skyeng.ru/assets/images/favicon/favicon-16x16.png" type="image/png" />
 <script>
     $(function() {
         sendRequest(`/API/RemoveFinishedItem?uuid=${params.get("uuid")}`, 
@@ -19,10 +20,20 @@
                     item.find(".uuid").text(i.Uuid);
                     item.removeClass("template");
                     item.show();
-                });  
+                });
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub, "TFS"]);
+                renderMathInElement(document.body);
+                $(".overlay").fadeOut(1000);
             });
     });
 </script>
+
+<div class="overlay text-center">
+    <div class="overlay-content">
+        <h1 class="text-white">Загрузка ответов...</h1>
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+</div>
 
 <div class="answers">
     <div class="warnbox">

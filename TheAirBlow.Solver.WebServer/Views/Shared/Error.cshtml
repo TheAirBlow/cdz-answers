@@ -24,6 +24,13 @@
                 <h5 class="text-white">ссылку, либо же на нашей стороне произошла ошибка.</h5>
             </text>
             break;
+        case "ratelimit":
+            <text>
+                <h5 class="text-white">Не спеши ты так! Мы ограничили количество запросов.</h5>
+                <h5 class="text-white">Вы можете отправить @Context.Request.Query["max"] запрос(ов) в @Context.Request.Query["period"] секунд(ы).</h5>
+                <h5 class="text-white">Вам осталость подождать еще  @Context.Request.Query["retryIn"] секунд(ы).</h5>
+            </text>
+            break;
         case "dolbaeb":
             <text>
                 <h5 class="text-white">Сайт не трогай, это святое!</h5>

@@ -20,7 +20,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
-    app.UseExceptionHandler("error");
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 

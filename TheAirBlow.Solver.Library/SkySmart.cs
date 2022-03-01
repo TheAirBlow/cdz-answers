@@ -175,8 +175,7 @@ namespace TheAirBlow.Solver.Library
                 var xml = GetAnswerXml(uuid, uuids);
                 var root = xml.XmlContent["div"];
                 var title = $"Задание №{i + 1}: {xml.Title}";
-                // https://edu.skysmart.ru/student/pidibehaxa
-                
+
                 #region Image Drag&Drop Question
                 foreach (XmlNode k in root?.SelectNodes($"//vim-dnd-image-set")!) {
                     var drags = k["vim-dnd-image-set-drags"];
@@ -286,10 +285,12 @@ namespace TheAirBlow.Solver.Library
                 #region Groups Question
                 foreach (XmlNode k in root?.SelectNodes($"//vim-groups")!)
                 foreach (XmlNode vim in k?.ChildNodes!) {
-                    var first = Encoding.ASCII.GetString(Convert.FromBase64String
+                    var first = Encoding.UTF8.GetString(Convert.FromBase64String
                         (vim.ChildNodes[0]?.Attributes?["text"]?.InnerText!));
-                    var second = Encoding.ASCII.GetString(Convert.FromBase64String
+                    var second = Encoding.UTF8.GetString(Convert.FromBase64String
                         (vim.ChildNodes[1]?.Attributes?["text"]?.InnerText!));
+                    first = first.Contains('\\') || first.Contains('~') ? $"\\({first}\\)" : first;
+                    second = second.Contains('\\') || second.Contains('~') ? $" \\({second}\\)" : second;
                     vim.InnerXml = ""; vim.InnerText = $"{first} → {second}";
                 }
                 #endregion
@@ -324,7 +325,7 @@ namespace TheAirBlow.Solver.Library
                 #endregion
 
                 // Slightly refactor the XML
-                foreach (var j in new[] { "vim-math", "math-input-answer", "vim-groups-row" })
+                foreach (var j in new[] { "vim-math", "math-input-answer" })
                 foreach (XmlNode k in root.SelectNodes($"//{j}")!)
                     k.InnerText = $"\\({k.InnerText}\\)";
 

@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Spectre.Console;
 using TheAirBlow.Solver.Library;
 
 namespace TheAirBlow.Solver.WebServer.Controllers
@@ -14,10 +15,13 @@ namespace TheAirBlow.Solver.WebServer.Controllers
                 var offset = split[0] is "https:" or "http:" ? 2 : 0;
                 switch (split[offset]) {
                     case "edu.skysmart.ru":
-                        if (!Regex.IsMatch(split[offset + 2], 
-                                @"^[a-zA-Z]+$")
-                            || split[offset + 1] is not "student")
-                            throw new Exception("Invalid link!");
+                        if (split[offset + 2] is not "task") {
+                            if (!Regex.IsMatch(split[offset + 2],
+                                    @"^[a-zA-Z]+$")
+                                || split[offset + 1] is not "student")
+                                throw new Exception("Invalid link!");
+                        } else offset++;
+
                         var uuid1 = QueueSystem.Instance.Enqueue(new QueueSystem.QueueItem {
                             Website = QueueSystem.Website.SkySmart,
                             SolverInput = split[offset + 2]
@@ -31,6 +35,18 @@ namespace TheAirBlow.Solver.WebServer.Controllers
                             SolverInput = split[offset + 2]
                         });
                         return Redirect($"~/Solver/QueueStatus?uuid={uuid2}");
+                    case "saharina.ru":
+                        var uuid3 = QueueSystem.Instance.Enqueue(new QueueSystem.QueueItem {
+                            Website = QueueSystem.Website.Saharina,
+                            SolverInput = link
+                        });
+                        return Redirect($"~/Solver/QueueStatus?uuid={uuid3}");
+                    case "testedu.ru":
+                        var uuid4 = QueueSystem.Instance.Enqueue(new QueueSystem.QueueItem {
+                            Website = QueueSystem.Website.TestEdu,
+                            SolverInput = link
+                        });
+                        return Redirect($"~/Solver/QueueStatus?uuid={uuid4}");
                     default:
                         throw new Exception("Invalid link!");
                 }
@@ -69,7 +85,8 @@ namespace TheAirBlow.Solver.WebServer.Controllers
                 return JsonConvert.SerializeObject(
                     QueueSystem.Instance.RemoveFinishedResult
                         (uuid));
-            } catch {
+            } catch (Exception e) {
+                AnsiConsole.WriteException(e);
                 return "undefined";
             }
         }
@@ -83,6 +100,9 @@ namespace TheAirBlow.Solver.WebServer.Controllers
                         return $"/Solver/View1?uuid={uuid}";
                     case QueueSystem.Website.SkySmart:
                         return $"/Solver/View2?uuid={uuid}";
+                    case QueueSystem.Website.TestEdu:
+                    case QueueSystem.Website.Saharina:
+                        return $"/Solver/View3?uuid={uuid}";
                 }
                 return "undefined";
             } catch { return "undefined"; }

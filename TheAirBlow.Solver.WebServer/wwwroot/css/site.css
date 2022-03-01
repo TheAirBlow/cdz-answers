@@ -1,15 +1,22 @@
 @import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/open-sans.min.css");
+/* Copyright © 2022 TheAirBlow - https://github.com/theairblow/cdz-answers */
 
+/* Main */
 html {
   position: relative;
   min-height: 100%;
   font-size: 16px;
 }
 
+body {
+  margin-bottom: 60px;
+}
+
 * {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* Loader */
 .lds-ellipsis {
   position: relative;
   margin-right: auto;
@@ -76,18 +83,37 @@ html {
   }
 }
 
-.centered-div {
-  -webkit-transform: translate(-50%, -50%);
+/* Misc stuff */
+.overlay {
+  background-color: #292b2c;
+  overflow-x: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.overlay-content {
   transform: translate(-50%, -50%);
   position: absolute;
+  text-align: center;
+  margin: auto;
   left: 50%;
   top: 50%;
 }
 
-body {
-  margin-bottom: 60px;
+.block {
+  display: inline-block;
+  padding: 10px;
 }
 
+.left-margin {
+  margin-left: 6px;
+}
+
+/* Boxes */
 .mainbox {
   transition-property: border, background-color;
   transition-timing-function: ease-out;
@@ -131,26 +157,38 @@ body {
   padding: 20px;
 }
 
+/* Make tables look good */
+table {
+  margin-top: 6px;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Centering stuff */
+.centered-div {
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
 .centered-table {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 15px;
 }
 
-table {
-  margin-top: 6px;
-  border-collapse: collapse;
-}
-
-.block {
-  display: inline-block;
-  padding: 10px;
-}
-
+/* Additional background color */
 .bg-neardark {
   background-color: #36393b;
 }
 
+/* Footer and Navigation Bar */
 footer {
   padding-top: 8px;
   position: fixed;
@@ -163,6 +201,17 @@ nav {
   height: 60px;
 }
 
+/* SkySmart Tags */
+vim-blockquote {
+  padding: 10px 10px 1px 10px;
+  border-left-color: #292929;
+  background-color: #303030;
+  border-left-style: solid;
+  border-left-width: 5px;
+  margin-bottom: 15px;
+  display: block;
+}
+
 vim-dnd-image-set-drag {
   border: 4px solid #292929;
   justify-content: center;
@@ -173,16 +222,11 @@ vim-dnd-image-set-drag {
   padding: 5px;
 }
 
-td, th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
 .debug-text {
   color: #676767
 }
 
-vim-input, vim-select, vim-test, math-input-answer {
+vim-input, vim-select, vim-test, math-input-answer, .text-box {
   border: 4px solid #292929;
   display: inline-block;
   background: #303030;
@@ -191,14 +235,6 @@ vim-input, vim-select, vim-test, math-input-answer {
   margin-right: 6px;
   margin-left: 6px;
   padding: 5px;
-}
-
-.left-margin {
-  margin-left: 6px;
-}
-
-vim-math {
-  margin-right: 4px;
 }
 
 li {
@@ -216,8 +252,74 @@ vim-instruction, vim-groups-row, div.elements {
   display: flex;
 }
 
+vim-test-item>vim-math>span {
+  display: inline-block;
+  padding: 4px;
+}
+
+/* Saharina */
+.answers-container {
+  position:relative
+}
+
+.answers-container .answer-user,
+.answers-container .answers-true {
+  padding:.75em
+}
+
+@media screen and (min-width:1024px) {
+  .answers-container .answer-user,
+  .answers-container .answers-true {
+    padding:1em 1.5em
+  }
+}
+
+.answers-container .answers-true {
+  margin-top: 10px;
+  border-top: 2px solid rgba(255,255,255,.2)
+}
+
+.answers-container .answer {
+  font-weight:700;
+  margin-right:.30em
+}
+
+.num_ege {
+  border: 4px solid #292929;
+  display: inline-block;
+  background: #303030;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  margin-right: 6px;
+  padding: 5px;
+}
+
+.mainbox .item {
+  margin:1em auto
+}
+
+@media screen and (min-width:1024px) {
+  .mainbox .item {
+    padding-left:2em
+  }
+}
+
+.text {
+  text-align:justify;
+  text-indent:1em
+}
+
+.quest {
+  font-weight: bold;
+}
+
+.emphasis {
+  font-style: italic;
+}
+
+/* Link input form */
 .inputbox {
-  width: 45%;
+  width: 50%;
   height: 40px;
   padding: 10px;
   font-size: 18px;
