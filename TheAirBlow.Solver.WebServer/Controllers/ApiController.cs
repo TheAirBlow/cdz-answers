@@ -85,8 +85,7 @@ namespace TheAirBlow.Solver.WebServer.Controllers
                 return JsonConvert.SerializeObject(
                     QueueSystem.Instance.RemoveFinishedResult
                         (uuid));
-            } catch (Exception e) {
-                AnsiConsole.WriteException(e);
+            } catch {
                 return "undefined";
             }
         }

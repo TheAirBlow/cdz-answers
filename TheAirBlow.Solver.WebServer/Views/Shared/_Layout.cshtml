@@ -14,6 +14,13 @@
         gtag('js', new Date());
         gtag('config', 'G-SNE18RYQD1');
       </script>
+      <meta content="Ответы ЦДЗ" property="og:title" />
+      <meta content="https://amogus.somee.com" property="og:url" />
+      <meta content="#448cd4" data-react-helmet="true" name="theme-color" />
+      <meta content="SkySmart, Skills4u и не только!" property="og:description" />
+      <meta content="https://cdn.icon-icons.com/icons2/831/PNG/512/questions_icon-icons.com_66659.png" property="og:image" />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9043023555080015"
+           crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
       <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
       <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"></script>
@@ -32,7 +39,7 @@
                   aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
                </button>
-               <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+               <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="white-space:nowrap;">
                   <ul class="navbar-nav flex-grow-1">
                      <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Главная страница</a>
@@ -47,6 +54,20 @@
                         <a class="nav-link text-light" href="https://github.com/theairblow/cdz-answers">GitHub</a>
                      </li>
                   </ul>
+               </div>
+               <h2 class="navbar-mobile-button" onclick="$('.navbar-mobile').css('height', '100%')">
+                  <div></div>
+                  <div></div>
+                  <div></div> 
+               </h2>
+               <div class="navbar-mobile">
+                  <h1 class="close" onclick="$('.navbar-mobile').css('height', '0')">&times;</h1>
+                  <div class="centered-div text-center">
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('/Home/Index')">Главная страница</h1>
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('/Home/Changelogs')">Изменения</h1>
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('/Home/API')">Документация API</h1>
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('https://github.com/theairblow/cdz-answers')">GitHub</h1>
+                  </div>
                </div>
             </div>
          </nav>

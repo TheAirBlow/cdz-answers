@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Microsoft.Extensions.Logging;
+using Spectre.Console;
 
 namespace TheAirBlow.Solver.Library;
 
@@ -52,10 +53,14 @@ public class QueueSystem
             }
 
             if (run) {
-                AnsiConsole.MarkupLine("[cyan]Solving an exercise...[/]");
-                AnsiConsole.MarkupLine($"[yellow]UUID: {item.Uuid}[/]");
-                AnsiConsole.MarkupLine($"[yellow]Website: {item.Website}[/]");
-                AnsiConsole.MarkupLine($"[yellow]Input: {item.SolverInput}[/]");
+                GlobalLogger.Instance.LogInformation(new EventId(), 
+                    null, "Solving an exercise...");
+                GlobalLogger.Instance.LogInformation(new EventId(), 
+                    null, $"UUID: {item.Uuid}");
+                GlobalLogger.Instance.LogInformation(new EventId(), 
+                    null, $"Website: {item.Website}");
+                GlobalLogger.Instance.LogInformation(new EventId(), 
+                    null, $"Input: {item.SolverInput}");
                 try {
                     switch (item.Website) {
                         case Website.Skills4u:
@@ -76,12 +81,13 @@ public class QueueSystem
                             break;
                     }
                 } catch (Exception e) {
-                    AnsiConsole.MarkupLine("[red]An exception occured while solving![/]");
-                    AnsiConsole.WriteException(e);
+                    GlobalLogger.Instance.LogInformation(new EventId(), 
+                        e, "An exception occured while solving!");
                     item.Failed = true;
                 }
                 
-                AnsiConsole.MarkupLine("[green]Item dequeued successfully![/]");
+                GlobalLogger.Instance.LogInformation(new EventId(), 
+                    null, "Item dequeued successfully!");
                 lock(_finished) _finished.Add(item);
                 lock(_queue) _queue.Dequeue();
             }

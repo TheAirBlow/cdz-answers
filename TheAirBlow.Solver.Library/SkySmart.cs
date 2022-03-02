@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -176,6 +177,32 @@ namespace TheAirBlow.Solver.Library
                 var root = xml.XmlContent["div"];
                 var title = $"Задание №{i + 1}: {xml.Title}";
 
+                #region Sentence Analysis Question
+                foreach (XmlElement k in root?.SelectNodes($"//kids-sentence-analysis")!) {
+                    var type = k.GetAttribute("type");
+                    switch(type) {
+                        case "color":
+                            foreach (XmlElement j in k.FirstChild!.ChildNodes) {
+                                var color = j.GetAttribute("value");
+                                color = color.Replace("salad", 
+                                    "limegreen");
+                                j.SetAttribute("style",
+                                    "display:inline-block;" +
+                                    "background:#303030;border-radius" +
+                                    ":5px;margin-bottom:2px;margin-right" +
+                                    ":6px;margin-left: 6px;padding: 5px;" +
+                                    "border-bottom-width:4px;border-" +
+                                    $"bottom-color:{color};border-" +
+                                    "bottom-style:solid;");
+                            }
+                            break;
+                        default:
+                            k.InnerXml = $"[Неизвестный тип задания \"{type}\"]";
+                            AnsiConsole.MarkupLine($"[yellow]Found new Sentence Analysis type: {type}[/]");
+                            break;
+                    }
+                }
+                #endregion
                 #region Image Drag&Drop Question
                 foreach (XmlNode k in root?.SelectNodes($"//vim-dnd-image-set")!) {
                     var drags = k["vim-dnd-image-set-drags"];
@@ -249,27 +276,41 @@ namespace TheAirBlow.Solver.Library
                     var newNode = xml.XmlContent.CreateElement(
                         "div", k.NamespaceURI);
                     var nodes = k.SelectNodes("//vim-dnd-group-item");
+                    var table = xml.XmlContent.CreateElement("table");
+                    var tr1 = xml.XmlContent.CreateElement("tr");
+                    var tr2 = xml.XmlContent.CreateElement("tr");
+                    table.SetAttribute("class", "text-white");
+                    tr1.SetAttribute("class", "bg-neardark");
+                    table.AppendChild(tr1); table.AppendChild(tr2);
+                    newNode.AppendChild(table);
+
                     for (var h = 0; h < nodes!.Count; h++) {
                         var item = nodes[h];
-                        var elements = xml.XmlContent.CreateElement(
-                            "div", newNode.NamespaceURI);
-                        elements.SetAttribute("class", "elements");
                         var ids = item!.Attributes?["drag-ids"]!.InnerText.Split(',');
                         var list2 = ids!.Select(id => drags?.SelectSingleNode(
                             $"//*[@answer-id='{id}']")!).ToList();
-                        elements.InnerText = $"{item.InnerText} ← ";
-                        for (var j = 0; j < list2.Count; j++) {
-                            var xmlNode = list2[j];
-                            try {
-                                ((XmlElement)xmlNode).SetAttribute(
-                                    "class", "left-margin");
-                            } catch { /* Ignore */ }
-                            elements.AppendChild(xmlNode);
-                            if (j != list2.Count - 1)
-                                elements.InnerText += " / ";
+                        var thTitle = xml.XmlContent
+                            .CreateElement("th");
+                        var thElements = xml.XmlContent
+                            .CreateElement("th");
+                        thTitle.InnerText = item.InnerText;
+                        
+                        foreach (var t in list2) {
+                            var div = xml.XmlContent
+                                .CreateElement("div");
+                            div.SetAttribute("class", 
+                                "small-text-box");
+                            var regex1 = new Regex("\\.*\\(.*\\)");
+                            var regex2 = new Regex("\\.*{.*}");
+                            if (regex1.Match(t.InnerText).Length != 0
+                                || regex2.Match(t.InnerText).Length != 0)
+                                t.InnerText = $"\\({t.InnerText}\\)";
+                            div.InnerText = t.InnerText;
+                            thElements.AppendChild(div);
                         }
 
-                        newNode.AppendChild(elements);
+                        tr2.AppendChild(thElements);
+                        tr1.AppendChild(thTitle);
                     }
 
                     k.AppendChild(newNode);
@@ -336,6 +377,10 @@ namespace TheAirBlow.Solver.Library
                             break;
                         case "em":
                             k.InnerXml = $"<em>{k.InnerXml}</em>";
+                            break;
+                        case "em strong":
+                        case "strong em":
+                            k.InnerXml = $"<em><b>{k.InnerXml}</b></em>";
                             break;
                         default:
                             AnsiConsole.MarkupLine($"[yellow]Found new vim-text type: {k.GetAttribute("type")}[/]");
