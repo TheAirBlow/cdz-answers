@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -64,6 +66,16 @@ namespace TheAirBlow.Solver.Library
 
             [JsonProperty("meta")] public MetaClass Meta;
         }
+
+        /// <summary>
+        /// A resource
+        /// </summary>
+        public class Resource
+        {
+            [JsonProperty("link")] public string Link;
+            [JsonProperty("key")] public string Key;
+            [JsonProperty("url")] public string Url;
+        }
         
         /// <summary>
         /// Login/password pair JSON
@@ -76,21 +88,65 @@ namespace TheAirBlow.Solver.Library
         
         private const string LoginRequest = "https://api-edu.skysmart.ru/api/v2/auth/auth/student";
         private const string Xml = "https://api-edu.skysmart.ru/api/v1/content/step/load?stepUuid=";
-        private const string Information = "https://api-edu.skysmart.ru/api/v1/user/config";
+        private const string Image = "https://api.vimbox.skyeng.ru/api/v1/resources/images";
         private const string Preview = "https://api-edu.skysmart.ru/api/v1/task/preview";
+        private const string Video = "https://content.vimbox.skyeng.ru/cms/api/video";
+        private const string AesKey = "A2B5EE3A4B73F8FCDA27FA32DA4EDBC8";
+        private const string AesIv = "xnMcr9WXXaSnzyph";
         public static string Token = "";
 
         /// <summary>
-        /// Get information about user
+        /// Encrypt a string and convert to Base64
         /// </summary>
-        /// <returns>Information</returns>
-        public static UserInformation GetInformation()
+        /// <param name="input">Input</param>
+        /// <returns>Output</returns>
+        public static string EncryptAndBase64(string input)
+        {
+            using var aes = Aes.Create();
+            using var enc = 
+                aes.CreateEncryptor(
+                    Encoding.UTF8.GetBytes(AesKey), 
+                    Encoding.UTF8.GetBytes(AesIv));
+            using var msEncrypt = new MemoryStream();
+            using var csEncrypt = new CryptoStream(msEncrypt,
+                enc, CryptoStreamMode.Write);
+            using (var swEncrypt = new StreamWriter(csEncrypt))
+                swEncrypt.Write(input);
+            return Convert.ToBase64String(msEncrypt.ToArray());
+        }
+
+        /// <summary>
+        /// Get resources
+        /// </summary>
+        /// <param name="ids">IDs</param>
+        /// <returns>Resources array</returns>
+        public static Resource[] GetImages(string[] ids)
         {
             using var client = new WebClient();
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             client.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {Token}");
-            var answer = client.DownloadString(Information);
-            return JsonConvert.DeserializeObject<UserInformation>(answer);
+            var idsString = HttpUtility.UrlEncode(
+                EncryptAndBase64($"\"{string.Join(",", ids)}\""));
+            var address = $"{Image}?ids={idsString}&isRetina=0";
+            var answer = client.DownloadString(address);
+            var array = JArray.Parse(answer); return 
+                array.ToObject<Resource[]>()!;
+        }
+        
+        /// <summary>
+        /// Get resources
+        /// </summary>
+        /// <param name="ids">IDs</param>
+        /// <returns>Resources array</returns>
+        public static Resource[] GetVideos(string[] ids)
+        {
+            using var client = new WebClient();
+            client.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {Token}");
+            var idsString = HttpUtility.UrlEncode(
+                EncryptAndBase64($"\"{string.Join(",", ids)}\""));
+            var address = $"{Video}?ids={idsString}";
+            var answer = client.DownloadString(address);
+            var array = JArray.Parse(answer); return 
+                array.ToObject<Resource[]>()!;
         }
 
         /// <summary>
@@ -167,8 +223,8 @@ namespace TheAirBlow.Solver.Library
         {
             var uuids = GetAnswerXmlsUuids(taskHash);
             var data = new AnswersAndMeta {
-                TeacherName = $"{uuids.Meta.TeacherInformation.Surname} {uuids.Meta.TeacherInformation.Name}",
-                SubjectName = uuids.Meta.Subject.Title
+                TeacherName = "смачная бебра",
+                SubjectName = "бебровидение"
             };
             
             for (var i = 0; i < uuids.Meta.Uuids.Length; i++) {
@@ -176,34 +232,8 @@ namespace TheAirBlow.Solver.Library
                 var xml = GetAnswerXml(uuid, uuids);
                 var root = xml.XmlContent["div"];
                 var title = $"Задание №{i + 1}: {xml.Title}";
-
-                #region Sentence Analysis Question
-                foreach (XmlElement k in root?.SelectNodes($"//kids-sentence-analysis")!) {
-                    var type = k.GetAttribute("type");
-                    switch(type) {
-                        case "color":
-                            foreach (XmlElement j in k.FirstChild!.ChildNodes) {
-                                var color = j.GetAttribute("value");
-                                color = color.Replace("salad", 
-                                    "limegreen");
-                                j.SetAttribute("style",
-                                    "display:inline-block;" +
-                                    "background:#303030;border-radius" +
-                                    ":5px;margin-bottom:2px;margin-right" +
-                                    ":6px;margin-left: 6px;padding: 5px;" +
-                                    "border-bottom-width:4px;border-" +
-                                    $"bottom-color:{color};border-" +
-                                    "bottom-style:solid;");
-                            }
-                            break;
-                        default:
-                            k.InnerXml = $"[Неизвестный тип задания \"{type}\"]";
-                            AnsiConsole.MarkupLine($"[yellow]Found new Sentence Analysis type: {type}[/]");
-                            break;
-                    }
-                }
-                #endregion
-                #region Image Drag&Drop Question
+                
+                #region Image Drag&Drop Question (Set)
                 foreach (XmlNode k in root?.SelectNodes($"//vim-dnd-image-set")!) {
                     var drags = k["vim-dnd-image-set-drags"];
                     var nodes = k.SelectNodes("//vim-dnd-image-set-drop");
@@ -230,22 +260,100 @@ namespace TheAirBlow.Solver.Library
                     }
                 }
                 #endregion
+                #region Image Drag&Drop Question (On)
+                foreach (XmlElement k in root.SelectNodes($"//vim-dnd-image")!) {
+                    var rootDiv = xml.XmlContent.CreateElement("div");
+                    rootDiv.SetAttribute("style", "position:relative" +
+                                               ";display:inline-block");
+                    var root2 = xml.XmlContent.CreateElement("div");
+                    root2.SetAttribute("style", "position:static;");
+                    var drags = k["vim-dnd-image-drags"];
+                    var nodes = k.SelectNodes("//vim-dnd-image-drop");
+                    var usedUp = new List<string>();
+                    for (var h = 0; h < nodes!.Count; h++) {
+                        var item = (XmlElement)nodes[h]!;
+                        var ids = item.GetAttribute("drag-ids").Split(',');
+                        var list2 = ids.Select(id => (XmlElement)drags?
+                            .SelectSingleNode($"//*[@answer-id='{id}']")!).ToList();
+                        XmlElement selected = null!;
+                        foreach (var l in list2)
+                            if (!usedUp.Contains(l.GetAttribute("answer-id"))) {
+                                usedUp.Add(l.GetAttribute("answer-id"));
+                                selected = l;
+                                break;
+                            }
+
+                        if (selected == null!)
+                            item.InnerText = "Ошибка!";
+                        else {
+                            var x = item.GetAttribute("x");
+                            var y = item.GetAttribute("y");
+                            item.SetAttribute("style",
+                                "position:absolute;margin-left:" +
+                                "-18px;margin-top:-18px;" +
+                                $"top:{y}%;left:{x}%;");
+                            item.AppendChild(selected);
+                        }
+
+                        root2.AppendChild(item);
+                    }
+
+                    rootDiv.AppendChild(root2);
+                    var img = xml.XmlContent.CreateElement("img");
+                    img.SetAttribute("src", k.GetAttribute("image"));
+                    rootDiv.AppendChild(img);
+                    k.AppendChild(rootDiv);
+                }
+                #endregion
+                #region Sentence Analysis Question
+                foreach (XmlElement k in root?.SelectNodes($"//kids-sentence-analysis")!) {
+                    var type = k.GetAttribute("type");
+                    switch(type) {
+                        case "color":
+                            foreach (XmlElement j in k.FirstChild!.ChildNodes) {
+                                var color = j.GetAttribute("value");
+                                color = color.Replace("salad", 
+                                    "limegreen");
+                                j.SetAttribute("style",
+                                    "display:inline-block;" +
+                                    "background:#303030;border-radius" +
+                                    ":5px;margin-bottom:2px;margin-right" +
+                                    ":6px;margin-left: 6px;padding: 5px;" +
+                                    "border-bottom-width:4px;border-" +
+                                    $"bottom-color:{color};border-" +
+                                    "bottom-style:solid;");
+                            }
+                            break;
+                        default:
+                            k.InnerXml = $"[Неизвестный тип задания \"{type}\"]";
+                            AnsiConsole.MarkupLine($"[yellow]Found new Sentence Analysis type: {type}[/]");
+                            break;
+                    }
+                }
+                #endregion
                 #region Text Drag&Drop Question
                 foreach (XmlNode k in root?.SelectNodes($"//vim-dnd-text")!) {
                     var drags = k["vim-dnd-text-drags"];
                     var nodes = k.SelectNodes("//vim-dnd-text-drop");
+                    var usedUp = new List<string>();
                     for (var h = 0; h < nodes!.Count; h++) {
                         var item = nodes[h];
                         var ids = item!.Attributes?["drag-ids"]!.InnerText.Split(',');
                         var list2 = ids!.Select(id => drags?.SelectSingleNode(
                             $"//*[@answer-id='{id}']")!).ToList();
                         
-                        for (var j = 0; j < list2.Count; j++) {
-                            item.AppendChild(list2[j]);
-                            if (j != list2.Count - 1)
-                                item.InnerXml += " или ";
-                        }
-
+                        XmlElement selected = null!;
+                        foreach (XmlElement l in list2)
+                            if (!usedUp.Contains(l.GetAttribute("answer-id"))) {
+                                usedUp.Add(l.GetAttribute("answer-id"));
+                                selected = l;
+                                break;
+                            }
+                        
+                        if (selected == null!)
+                            item.InnerText = "Ошибка!";
+                        else item.AppendChild(selected);
+                        
                         item.InnerXml = $"<b>{item.InnerXml}</b>";
                     }
                 }
@@ -364,6 +472,60 @@ namespace TheAirBlow.Solver.Library
                     }
                 }
                 #endregion
+                #region Images
+                var images = root!.SelectNodes("//vim-image");
+                if (images!.Count != 0) {
+                    var ids = new List<string>();
+                    foreach (XmlElement j in images)
+                        ids.Add(j.GetAttribute("resource-id"));
+                    var resources = GetImages(ids.ToArray());
+                    for (int j = 0; j < images.Count; j++) {
+                        var item = images[j] as XmlElement;
+                        var img = xml.XmlContent
+                            .CreateElement("img");
+                        img.SetAttribute("src",
+                            resources[j].Link);
+                        img.SetAttribute("class", 
+                            "image");
+                        item!.AppendChild(img);
+                    }
+                }
+                #endregion
+                #region Videos
+                var videos = root.SelectNodes("//vim-video");
+                if (videos!.Count != 0) {
+                    var ids = new List<string>();
+                    foreach (XmlElement j in videos)
+                        ids.Add(j.GetAttribute("resource-id"));
+                    var resources = GetVideos(ids.ToArray());
+                    for (int j = 0; j < videos.Count; j++) {
+                        var item = videos[j] as XmlElement;
+                        var resource = resources[j];
+                        if (resource.Url.Contains("youtube.com")) {
+                            var iframe = xml.XmlContent.CreateElement("iframe");
+                            var div = xml.XmlContent.CreateElement("div");
+                            iframe.SetAttribute("allow",
+                                "accelerometer; autoplay; " +
+                                "clipboard-write; encrypted-media; " +
+                                "gyroscope; picture-in-picture");
+                            iframe.SetAttribute("src",
+                                $"https://www.youtube.com/embed/{resource.Key}" +
+                                $"?controls=1&amp;disablekb=1&amp;playsinline" +
+                                $"=1&amp;enablejsapi=1&amp;iv_load_policy=3&amp;" +
+                                $"cc_load_policy=3&amp;rel=0&amp;showinfo=0&amp;" +
+                                $"color=white");
+                            iframe.SetAttribute("frameborder", "0");
+                            iframe.SetAttribute("class", "video");
+                            iframe.SetAttribute("height", "100%");
+                            iframe.SetAttribute("width", "100%");
+                            div.AppendChild(iframe);
+                            item!.AppendChild(div);
+                        } else {
+                            item!.InnerText = "[Данное видео не поддерживается]";
+                        }
+                    }
+                }
+                #endregion
 
                 // Slightly refactor the XML
                 foreach (var j in new[] { "vim-math", "math-input-answer" })
@@ -388,18 +550,13 @@ namespace TheAirBlow.Solver.Library
                     }
                 }
                 
-                foreach (XmlNode k in root.SelectNodes($"//vim-video")!)
-                    k.InnerText = "[Тут должно быть видео]";
-                
                 foreach (XmlNode k in root.SelectNodes($"//vim-iframe")!)
                     k.InnerText = "[Тут находится медиа-контент или игра]";
-                
-                foreach (XmlNode k in root.SelectNodes($"//vim-image")!)
-                    k.InnerText = "[Тут должна быть картинка]";
-                
+
                 foreach (var j in new[] { "vim-dnd-text-drags", "vim-dnd-group-drags", 
                              "vim-dnd-group-groups", "vim-instruction", "vim-source-list",
-                             "vim-dnd-image-set-drags", "vim-dnd-image-set-images" })
+                             "vim-dnd-image-set-drags", "vim-dnd-image-set-images", 
+                             "edu-interactive-hint", "vim-dnd-image-drags" })
                 foreach (XmlNode k in root.SelectNodes($"//{j}")!)
                     k.ParentNode?.RemoveChild(k);
                     

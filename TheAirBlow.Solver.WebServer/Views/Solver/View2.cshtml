@@ -3,33 +3,8 @@
 }
 
 <link rel="icon" href="https://cdn-user49501.skyeng.ru/assets/images/favicon/favicon-16x16.png" type="image/png" />
-<script>
-    $(function() {
-        sendRequest(`/API/RemoveFinishedItem?uuid=${params.get("uuid")}`, 
-            function(json) { 
-                json = JSON.parse(json);
-                $(".teacher").text(json.SolverOutput.TeacherName);
-                $(".subject").text(json.SolverOutput.SubjectName);
-                json.SolverOutput.Answers.forEach(function (i) {
-                    let item = $(".template").clone();
-                    item.appendTo(".answers");
-                    item.find(".interactive").text(i.IsInteractive);
-                    item.find(".random").text(i.IsRandom);
-                    item.find(".title").text(i.Title);
-                    item.find(".data").html(i.Data);
-                    item.find(".uuid").text(i.Uuid);
-                    item.removeClass("template");
-                    item.show();
-                });
-                MathJax.Hub.Queue(["Typeset", MathJax.Hub, "TFS"]);
-                renderMathInElement(document.body);
-                $(".overlay").fadeOut(1000);
-            });
-    });
-</script>
-
 <div class="overlay text-center">
-    <div class="overlay-content">
+    <div class="centered-div">
         <h1 class="text-white">Загрузка ответов...</h1>
         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </div>
@@ -46,11 +21,20 @@
     </div>
     <div class="infobox">
         <h5 class="text-white"><b>Полезные вещи и информация:</b></h5>
-        <h6 class="text-white">Поиск задания по содержанию: <input type="text" class="search"></h6>
         <h6 class="text-white">Вы можете нажать на задание чтобы пометить его решенным (он станет зеленым)</h6>
+        <h6 class="text-white">Поиск задания по содержанию: <input type="text" class="search"></h6>
         <br/><h5 class="text-white"><b>Информация о комнате:</b></h5>
         <h6 class="text-white">Учитель: <text class="teacher"></text></h6>
         <h6 class="text-white">Предмет: <text class="subject"></text></h6>
+        <br/><h5 class="text-white"><b>Дополнительно:</b></h5>
+        <div class="flex">
+            <input type="checkbox" class="sus images-input"/><label for="sus" class="images"></label>
+            <text class="text-white">Убрать картинки</text>
+        </div>
+        <div class="flex">
+            <input type="checkbox" class="sus videos-input"/><label for="sus" class="videos"></label>
+            <text class="text-white">Убрать видео</text>
+        </div>
     </div>
     <div class="template mainbox mainbox-normal" style="display: none;">
         <h4 class="text-white title"></h4>
