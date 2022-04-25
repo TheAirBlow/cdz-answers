@@ -223,8 +223,8 @@ namespace TheAirBlow.Solver.Library
         {
             var uuids = GetAnswerXmlsUuids(taskHash);
             var data = new AnswersAndMeta {
-                TeacherName = "смачная бебра",
-                SubjectName = "бебровидение"
+                TeacherName = $"{uuids.Meta.TeacherInformation.Surname} {uuids.Meta.TeacherInformation.Name}",
+                SubjectName = uuids.Meta.Subject.Title
             };
             
             for (var i = 0; i < uuids.Meta.Uuids.Length; i++) {
