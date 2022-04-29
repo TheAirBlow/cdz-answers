@@ -3,28 +3,8 @@
 }
 
 <link rel="shortcut icon" href="https://skills4u.ru/favicon.ico" type="image/x-icon" />
-<script>
-    $(function() {
-        sendRequest(`/API/RemoveFinishedItem?uuid=${params.get("uuid")}`, 
-            function(json) { 
-                json = JSON.parse(json);
-                json.SolverOutput.forEach(function (i) {
-                    let item = $(".template").clone();
-                    item.appendTo(".answers");
-                    item.find(".question").text(i.Question);
-                    item.find(".answer").text(i.Answer);
-                    item.removeClass("template");
-                    item.show();
-                });
-                MathJax.Hub.Queue(["Typeset", MathJax.Hub, "TFS"]);
-                renderMathInElement(document.body);
-                $(".overlay").fadeOut(1000);
-            });
-    });
-</script>
-
 <div class="overlay text-center">
-    <div class="overlay-content">
+    <div class="centered-div">
         <h1 class="text-white">Загрузка ответов...</h1>
         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </div>
@@ -40,8 +20,8 @@
         <h6 class="text-white">Также <b>не перезагружайте страницу</b>! Ответы на задания уже удалены с наших серверов. Если что - просто запросите ответы заного.</h6>
     </div>
     <div class="infobox">
-        <h6 class="text-white"><b>Поиск задания по содержанию:</b> <input type="text" class="search"></h6>
         <h6 class="text-white">Вы можете нажать на задание чтобы пометить его решенным (он станет зеленым)</h6>
+        <h6 class="text-white"><b>Поиск задания по содержанию:</b> <input type="text" class="search"></h6>
     </div>
     <div class="template mainbox mainbox-normal" style="display: none;">
         <h4 class="text-white question"></h4>
