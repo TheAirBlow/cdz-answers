@@ -77,8 +77,8 @@ $(function() {
                     json.SolverOutput.forEach(function (i) {
                         let item = $(".template").clone();
                         item.appendTo(".answers");
-                        item.find(".question").text(i.Question);
-                        item.find(".answer").text(i.Answer);
+                        item.find(".question").text($(i.Question).text());
+                        item.find(".answer").text($(i.Answer).text());
                         item.removeClass("template");
                         item.show();
                     });

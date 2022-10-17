@@ -17,15 +17,6 @@ public static class Skills4u
         public string Question;
         public string Answer;
     }
-    
-    /// <summary>
-    /// Test ID and Number Pair
-    /// </summary>
-    private class TestIdNumberPair
-    {
-        public string TestId;
-        public string Number;
-    }
 
     /// <summary>
     /// Get answers
@@ -46,14 +37,15 @@ public static class Skills4u
         for (var i = 0; i < jsValues!.Count() - 1; i++) {
             var item = jsValues![i];
             var obj = item.AsObject();
-            var question = $"<root>{obj.GetProperty("question").Value.AsString()}</root>";
-            var answer = $"<root>{obj.GetProperty("answer").Value.AsString()}</root>";
-            var xml = new XmlDocument();
-            xml.LoadXml(question); var str1 = xml.InnerText;
-            xml.LoadXml(answer); var str2 = xml.InnerText;
+            var question = $"{obj.GetProperty("question").Value.AsString()}";
+            var answer = $"{obj.GetProperty("answer").Value.AsString()}";
+            question = question.Replace("<br>", "");
+            question = question.Replace("</br>", "");
+            answer = answer.Replace("<br>", "");
+            answer = answer.Replace("</br>", "");
             pairs.Add(new QuestionAnswerPair {
-                Question = str1,
-                Answer = str2
+                Question = question,
+                Answer = answer
             });
         }
 
