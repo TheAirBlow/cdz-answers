@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Ошибка";
+}
+
+<h1 class="text-white">Произошла ошибка!</h1>
+
+@{
+    switch (Context.Request.Query["type"]) {
+        case "invalid_uuid":
+            <text>
+                <h5 class="text-white">Нам не удалось получить информацию о задании</h5>
+                <h5 class="text-white">с данным UUID в очереди заданий.</h5>
+            </text>
+            break;
+        case "invalid_link":
+            <text>
+                <h5 class="text-white">Ссылка, которую вы ввели, либо не поддерживается,</h5>
+                <h5 class="text-white">либо же вы ошиблись когда вписывали её.</h5>
+            </text>
+            break;
+        case "solving_error":
+            <text>
+                <h5 class="text-white">Нам не удалось решить задание. Возможно, вы ввели неверную</h5>
+                <h5 class="text-white">ссылку, либо же на нашей стороне произошла ошибка.</h5>
+            </text>
+            break;
+        case "ratelimit":
+            <text>
+                <h5 class="text-white">Не спеши ты так! Мы ограничили количество запросов.</h5>
+                <h5 class="text-white">Вы можете отправить @Context.Request.Query["max"] запрос(ов) в @Context.Request.Query["period"] секунд(ы).</h5>
+                <h5 class="text-white">Вам осталость подождать еще  @Context.Request.Query["retryIn"] секунд(ы).</h5>
+            </text>
+            break;
+        case "dolbaeb":
+            <text>
+                <h5 class="text-white">Сайт не трогай, это святое!</h5>
+            </text>
+            break;
+        default:
+            <text>
+                <h5 class="text-white">[Кода ошибки не обнаружено]</h5>
+            </text>
+            break;
+    }
+}

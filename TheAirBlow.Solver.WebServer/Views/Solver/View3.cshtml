@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Saharina/TestEdu";
+}
+
+<link rel="shortcut icon" href="https://saharina.ru/favicon.ico" type="image/x-icon" />
+<div class="overlay text-center">
+    <div class="centered-div">
+        <h1 class="text-white">Загрузка ответов...</h1>
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+</div>
+
+<div class="answers">
+    <div class="warnbox">
+        <b>
+            <h2 class="text-white" style="float:right;margin-top:-4px;user-select:none" onclick="$('.warnbox').hide()">x</h2>
+            <h2 class="text-white">Внимание, предупреждаем!</h2>
+        </b>
+        <h6 class="text-white"><b>Ответы на задания бесплатные</b>, и если вы их купили, то вас заскамили. Обязательно сообщите о продавце в Issues на GitHub.</h6>
+        <h6 class="text-white">Также <b>не перезагружайте страницу</b>! Ответы на задания уже удалены с наших серверов. Если что - просто запросите ответы заного.</h6>
+    </div>
+    <div class="infobox">
+        <h5 class="text-white"><b>Полезные вещи и информация:</b></h5>
+        <h6 class="text-white">Вы можете нажать на задание чтобы пометить его решенным (он станет зеленым)</h6>
+        <h6 class="text-white">Поиск задания по содержанию: <input type="text" class="search"></h6>
+    </div>
+    <div class="template mainbox mainbox-normal text-white" style="display: none;">
+        <!-- HTML code here -->
+    </div>
+</div>

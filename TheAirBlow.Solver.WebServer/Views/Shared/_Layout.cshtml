@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <!-- Куда мы лезем? -->
+      <title>Ответы ЦДЗ - @ViewData["Title"]</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-SNE18RYQD1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SNE18RYQD1');
+      </script>
+      <meta content="Ответы ЦДЗ" property="og:title" />
+      <meta content="https://amogus.somee.com" property="og:url" />
+      <meta content="#448cd4" data-react-helmet="true" name="theme-color" />
+      <meta content="SkySmart, Skills4u и не только!" property="og:description" />
+      <meta content="https://cdn.icon-icons.com/icons2/831/PNG/512/questions_icon-icons.com_66659.png" property="og:image" />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9043023555080015"
+           crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="~/lib/jquery/dist/jquery.min.js"></script>
+      <script src="~/js/site.js"></script>
+   </head>
+   <body class="bg-dark">
+      <header>
+         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-neardark">
+            <div class="container-fluid">
+               <h4 class="text-white" style="margin-right:5px">Ответы ЦДЗ</h4>
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                  aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="white-space:nowrap;">
+                  <ul class="navbar-nav flex-grow-1">
+                     <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Главная страница</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Changelogs">Изменения</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="API">Документация API</a>
+                     </li>
+                  </ul>
+               </div>
+               <h2 class="navbar-mobile-button" onclick="$('.navbar-mobile').css('height', '100%')">
+                  <div></div>
+                  <div></div>
+                  <div></div> 
+               </h2>
+               <div class="navbar-mobile">
+                  <h1 class="close" onclick="$('.navbar-mobile').css('height', '0')">&times;</h1>
+                  <div class="centered-div text-center">
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('/Home/Index')">Главная страница</h1>
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('/Home/Changelogs')">Изменения</h1>
+                     <h1 class="text-light force-font no-interact" onclick="location.replace('/Home/API')">Документация API</h1>
+                  </div>
+               </div>
+            </div>
+         </nav>
+      </header>
+      <div class="container">
+         <main role="main" class="pb-3">
+            @RenderBody()
+         </main>
+      </div>
+      <footer class="border-top bg-neardark text-white">
+         <div class="text-center">
+            Copyright &copy; 2022 <a href="https://github.com/theairblow">TheAirBlow</a> - Ответы ЦДЗ
+         </div>
+      </footer>
+      @await RenderSectionAsync("Scripts", required: false)
+   </body>
+</html>

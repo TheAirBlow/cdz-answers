@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "SkySmart";
+}
+
+<link rel="icon" href="https://cdn-user49501.skyeng.ru/assets/images/favicon/favicon-16x16.png" type="image/png" />
+<div class="overlay text-center">
+    <div class="centered-div">
+        <h1 class="text-white">Загрузка ответов...</h1>
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+</div>
+
+<div class="answers">
+    <div class="warnbox">
+        <b>
+            <h2 class="text-white" style="float:right;margin-top:-4px;user-select:none" onclick="$('.warnbox').hide()">x</h2>
+            <h2 class="text-white">Внимание, предупреждаем!</h2>
+        </b>
+        <h6 class="text-white"><b>Ответы на задания бесплатные</b>, и если вы их купили, то вас заскамили. Обязательно сообщите о продавце в Issues на GitHub.</h6>
+        <h6 class="text-white">Также <b>не перезагружайте страницу</b>! Ответы на задания уже удалены с наших серверов. Если что - просто запросите ответы заного.</h6>
+    </div>
+    <div class="infobox">
+        <h5 class="text-white"><b>Полезные вещи и информация:</b></h5>
+        <h6 class="text-white">Вы можете нажать на задание чтобы пометить его решенным (он станет зеленым)</h6>
+        <h6 class="text-white">Поиск задания по содержанию: <input type="text" class="search"></h6>
+        <br/><h5 class="text-white"><b>Информация о комнате:</b></h5>
+        <h6 class="text-white">Учитель: <text class="teacher"></text></h6>
+        <h6 class="text-white">Предмет: <text class="subject"></text></h6>
+        <br/><h5 class="text-white"><b>Дополнительно:</b></h5>
+        <div class="flex">
+            <input type="checkbox" class="sus images-input"/><label for="sus" class="images"></label>
+            <text class="text-white">Убрать картинки</text>
+        </div>
+        <div class="flex">
+            <input type="checkbox" class="sus videos-input"/><label for="sus" class="videos"></label>
+            <text class="text-white">Убрать видео</text>
+        </div>
+    </div>
+    <div class="template mainbox mainbox-normal" style="display: none;">
+        <h4 class="text-white title"></h4>
+        <div class="text-white data"></div>
+        <br/><div class="debug-text debug">
+            <h6>UUID: <text class="uuid"></text></h6>
+            <h6>Интерактивное: <text class="interactive"></text></h6>
+            <h6>Рандомное: <text class="random"></text></h6>
+        </div>
+    </div>
+</div>

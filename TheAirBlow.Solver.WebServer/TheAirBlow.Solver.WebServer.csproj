@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TheAirBlow.Solver.Library\TheAirBlow.Solver.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreRateLimit" Version="4.0.1" />
+    <PackageReference Include="BundleTransformer.Core" Version="1.10.0" />
+    <PackageReference Include="BundleTransformer.NUglify" Version="1.12.46" />
+    <PackageReference Include="BundleTransformer.SassAndScss" Version="1.12.36" />
+    <PackageReference Include="BundleTransformer.UglifyJs" Version="1.12.44" />
+    <PackageReference Include="JavaScriptEngineSwitcher.Msie" Version="3.12.6" />
+    <PackageReference Include="Spectre.Console" Version="0.43.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Web.config">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

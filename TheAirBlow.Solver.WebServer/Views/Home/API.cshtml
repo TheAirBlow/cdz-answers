@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "API";
+}
+
+<h2 class="text-white text-center">Документация API нашего сервиса:</h2><br/>
+<div class="box">
+    <h4 class="text-white"><b>/API/LinkRedirect?link=[Ссылка]</b> \(←\) Начать решение задания</h4>
+    <ol>
+        <li class="text-white"><b>Перенаправление:</b> /Solver/QueueStatus?uuid=[UUID]</li>
+    </ol>
+</div>
+<div class="box">
+    <h4 class="text-white"><b>/API/GetQueuePosition?uuid=[UUID]</b> \(←\) Получить позицию в очереди</h4>
+    <ol>
+        <li class="text-white"><b>К полученному числу надо прибавить один!</b></li>
+        <li class="text-white"><b>Ответ:</b> Позиция в очереди, пример: <b>5</b></li>
+    </ol>
+</div>
+<div class="box">
+    <h4 class="text-white"><b>/API/GetFinishedItem?uuid=[UUID]</b> \(←\) Получить информацию о завершенном задании</h4>
+    <ol>
+        <li class="text-white"><b>Вы не получите ответ! Для этого используйте RemoveFinishedItem!</b></li>
+        <li class="text-white"><b>Ответ:</b> JSON, пример:</li>
+        <script src="https://gist.github.com/TheAirBlow/b29673b7e874fa4af331d68580bb7b7d.js"></script>
+    </ol>
+</div>
+<div class="box">
+    <h4 class="text-white"><b>/API/RemoveFinishedItem?uuid=[UUID]</b> \(←\) Получить информацию о завершенном задании</h4>
+    <ol>
+        <li class="text-white"><b>Эта команда может быть использована только один раз для определенного UUID!</b></li>
+        <li class="text-white"><b>Ответ:</b> JSON, пример:</li>
+        <script src="https://gist.github.com/TheAirBlow/f4d4684ef11ac09a896830f3332b310d.js"></script>
+    </ol>
+</div>
+<div class="box">
+    <h4 class="text-white"><b>/API/GetLink?uuid=[UUID]</b> \(←\) Получить ссылку на на нужную страницу для правильного отображения</h4>
+    <ol>
+        <li class="text-white"><b>Ответ:</b> Endpoint, пример: <b>/Solver/View1?uuid=[uuid]</b></li>
+    </ol>
+</div>

@@ -1,0 +1,505 @@
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/open-sans.min.css");
+/* Copyright © 2022 TheAirBlow - https://github.com/theairblow/cdz-answers */
+
+/* Main */
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: 16px;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Sussy Switch */
+.sus[type=checkbox]{
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+label[for="sus"] {
+  border-radius: 100px;
+  position: relative;
+  background: grey;
+  cursor: pointer;
+  display: block;
+  height: 30px;
+  width: 60px;
+}
+
+label[for="sus"]:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+.sus:checked + label[for="sus"] {
+  background: #bada55;
+}
+
+.sus:checked + label[for="sus"]:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+label[for="sus"]:active:after {
+  width: 30px;
+}
+
+.flex {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.flex>text {
+  align-items: center;
+  margin-left: 10px;
+  display: flex;
+}
+
+/* Mobile Navbar */
+.navbar-mobile-button {
+  position: relative;
+  user-select: none;
+  display: block;
+  float: right;
+  right: 4px;
+  top: 3px;
+}
+
+.navbar-mobile-button div {
+  background-color: white;
+  margin: 6px 0;
+  width: 35px;
+  height: 5px;
+}
+
+.no-interact {
+  user-select: none;
+}
+
+.navbar-mobile {
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 0;
+  left: 0;
+  top: 0;
+}
+
+.force-font {
+  font-size: 34px;
+}
+
+.close {
+  position: relative;
+  user-select: none;
+  display: block;
+  float: right;
+  color: white;
+  font-size: 72px;
+  right: 30px;
+  top: 3px;
+}
+
+/* Loader */
+.lds-ellipsis {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  height: 80px;
+  width: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+/* Misc stuff */
+.overlay {
+  background-color: #292b2c;
+  overflow-x: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.block {
+  display: inline-block;
+  padding: 10px;
+}
+
+.left-margin {
+  margin-left: 6px;
+}
+
+/* Boxes */
+.mainbox {
+  transition-property: border, background-color;
+  transition-timing-function: ease-out;
+  transition-duration: 100ms;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.mainbox-normal {
+  border: 4px solid #292929;
+  background: #383838;
+}
+
+.mainbox-clicked {
+  border: 4px solid limegreen;
+  background: #2d312d;
+}
+
+.warnbox {
+  border: 4px solid #960000;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background: red;
+  padding: 20px;
+}
+
+.box {
+  border: 4px solid #292929;
+  border-radius: 20px;
+  background: #383838;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.infobox {
+  border: 4px solid #918700;
+  border-radius: 20px;
+  background: #e1c601;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+/* Make tables look good */
+table {
+  margin-top: 6px;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Centering stuff */
+.centered-div {
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  top: 50%;
+}
+
+.centered-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+/* Additional background color */
+.bg-neardark {
+  background-color: #36393b;
+}
+
+/* Footer and Navigation Bar */
+footer {
+  padding-top: 8px;
+  position: fixed;
+  height: 40px;
+  z-index: 100;
+  width: 100%;
+  bottom: 0;
+}
+
+nav {
+  height: 60px;
+  z-index: 100;
+}
+
+/* SkySmart Tags */
+vim-video>div {
+  padding-bottom: 56.25%;
+  position: relative;
+  width: 100%;
+  height: 0;
+}
+
+vim-video>div>iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.image {
+  margin-top: 10px;
+}
+
+vim-dnd-image-drop {
+  border: 4px solid #292929;
+  display: inline-block;
+  background: #303030;
+  position: relative;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  margin-right: 6px;
+  margin-left: 6px;
+  padding: 5px;
+}
+
+.example {
+  background-image: url("https://edu.skysmart.ru/right-example.fb22ffce0db16b78.svg");
+  background-repeat: no-repeat;
+  background-position-x: 18px;
+  background-position-y: 15px;
+  padding: 12px 12px 1px 54px;
+  background-size: 22px 20px;
+  border-left-color: #1f261f;
+  background-color: #273328;
+  border-left-style: solid;
+  border-left-width: 5px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+vim-blockquote>p {
+  margin: 0;
+}
+
+vim-blockquote {
+  padding: 10px 10px 10px 10px;
+  border-left-color: #292929;
+  background-color: #303030;
+  border-left-style: solid;
+  border-left-width: 5px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+vim-dnd-image-set-drag {
+  border: 4px solid #292929;
+  justify-content: center;
+  background: #303030;
+  border-radius: 5px;
+  margin-top: 6px;
+  display: flex;
+  padding: 5px;
+}
+
+.debug-text {
+  color: #676767
+}
+
+@media (max-width:1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+.small-text-box {
+  border: 4px solid #292929;
+  display: inline-block;
+  background: #303030;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  margin-left: 6px;
+  padding: 5px;
+}
+
+vim-input, vim-select, vim-test, math-input-answer, .text-box {
+  border: 4px solid #292929;
+  display: inline-block;
+  background: #303030;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  margin-right: 6px;
+  margin-left: 6px;
+  padding: 5px;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+vim-test {
+  display: grid;
+}
+
+vim-instruction, vim-groups-row, div.elements {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+vim-test-item>vim-math>span {
+  display: inline-block;
+  padding: 4px;
+}
+
+/* Saharina */
+.answers-container {
+  position:relative
+}
+
+.answers-container .answer-user,
+.answers-container .answers-true {
+  padding:.75em
+}
+
+@media screen and (min-width:1024px) {
+  .answers-container .answer-user,
+  .answers-container .answers-true {
+    padding:1em 1.5em
+  }
+}
+
+.answers-container .answers-true {
+  margin-top: 10px;
+  border-top: 2px solid rgba(255,255,255,.2)
+}
+
+.answers-container .answer {
+  font-weight:700;
+  margin-right:.30em
+}
+
+.num_ege {
+  border: 4px solid #292929;
+  display: inline-block;
+  background: #303030;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  margin-right: 6px;
+  padding: 5px;
+}
+
+.mainbox .item {
+  margin:1em auto
+}
+
+@media screen and (min-width:1024px) {
+  .mainbox .item {
+    padding-left:2em
+  }
+}
+
+.text {
+  text-align:justify;
+  text-indent:1em
+}
+
+.quest {
+  font-weight: bold;
+}
+
+.emphasis {
+  font-style: italic;
+}
+
+/* Link input form */
+.inputbox {
+  width: 50%;
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+@media (max-width:1024px) {
+  .inputbox {
+    width: 85%;
+  }
+}
+
+.sendbutton {
+  font-size: 18px;
+  background-color: #008CBA;
+  color: black; border-radius: 10px;
+  border: 2px solid #008CBA;
+  padding-right: 10px;
+  padding-left: 10px;
+}

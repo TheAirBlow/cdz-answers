@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Очередь";
+}
+
+<script>
+    const query = "?uuid=" + params.get("uuid");
+    
+    setInterval(function () {
+        sendRequest("/API/GetQueuePosition" + query, function(data) {
+            data = parseInt(data);
+            sendRequest("/API/GetLink" + query, function(data) { 
+                if (data !== "undefined") {
+                    sendRequest("/API/GetFinishedItem" + query, function(data2) { 
+                        data2 = JSON.parse(data2);
+                        console.info(data2.Failed)
+                        if (data2.Failed) location.replace(
+                            "/Home/Error?type=solving_error");
+                        else location.replace(data);
+                    })
+                }
+            })
+            if (data < 0) {
+                $(".queue").hide();
+                $(".solving").show();
+            } else {
+                $(".queue").show();
+                $(".solving").hide();
+                $(".position").text(parseInt(data) + 1);
+            }
+            $(".loading").hide();
+        })
+    }, 1000);
+</script>
+
+<div class="centered-div">
+    <div class="loading text-center">
+        <h1 class="text-white">Загрузка статуса...</h1>
+    </div>
+    
+    <div class="queue text-center" style="display: none;">
+        <h1 class="text-white">Вы сейчас в очереди!</h1>
+        <h4 class="text-white">Текущая позиция: <a class="position">1</a></h4>
+    </div>
+    
+    <div class="solving text-center" style="display: none;">
+        <h1 class="text-white">Задание решается!</h1>
+        <h4 class="text-white">Подождите пару секунд...</h4>
+    </div>
+    
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+</div>

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Главная Страница";
+}
+
+<div class="text-center">
+    <h1 class="text-white">Добро пожаловать на наш сайт!</h1>
+    <h4 class="text-white">Наш сайт поддерживает следующие ЦДЗ:</h4>
+    <table class="centered-table">
+        <tr>
+            <th class="text-white">Сайт</th>
+            <th class="text-white">Метод</th>
+            <th class="text-white">Информация</th>
+        </tr>
+        <tr>
+            <th class="text-white">Учи.ру</th>
+            <th class="text-white">Плагин Firefox</th>
+            <th class="text-white">
+                Туториал и вся информация
+                <a href="https://github.com/TheAirBlow/HackPack/tree/main/uchihack"
+                   class="text-white">тут</a>.
+            </th>
+        </tr>
+        <tr>
+            <th class="text-white">РЭШ</th>
+            <th class="text-white">Плагин Firefox</th>
+            <th class="text-white">
+                Туториал и вся информация
+                <a href="https://github.com/TheAirBlow/HackPack/tree/main/rehack"
+                   class="text-white">тут</a>.</th>
+        </tr>
+        <tr>
+            <th class="text-white">SkySmart</th>
+            <th class="text-white">Этот сайт</th>
+            <th class="text-white">Получение ответов используя API</th>
+        </tr>
+        <tr>
+            <th class="text-white">Skills4u</th>
+            <th class="text-white">Этот сайт</th>
+            <th class="text-white">Получение ответов из переменной</th>
+        </tr>
+        <tr>
+            <th class="text-white">Saharina</th>
+            <th class="text-white">Этот сайт</th>
+            <th class="text-white">Отправка неправильных ответов и получение верных</th>
+        </tr>
+        <tr>
+            <th class="text-white">TestEdu</th>
+            <th class="text-white">Этот сайт</th>
+            <th class="text-white">Декодирование ответов из переменных</th>
+        </tr>
+    </table>
+    <p class="text-white">Просто скопируйте ссылку суда, а мы выполним всю остальную работу:</p>
+    <form action="/API/LinkRedirect">
+        <input type="text" id="link" name="link" class="inputbox"><br/>
+        <input type="submit" value="Получить ответы!" class="sendbutton">
+    </form>
+</div>

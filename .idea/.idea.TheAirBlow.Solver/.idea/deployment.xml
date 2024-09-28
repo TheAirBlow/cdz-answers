@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="Somee">
+        <serverdata>
+          <mappings>
+            <mapping local="C:/Program Files/dotnet/sdk/6.0.102/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_6_default.editorconfig" web="/" />
+            <mapping local="C:/Program Files/dotnet/sdk/6.0.102/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_6_default.editorconfig" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/QueueSystem.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/Skills4u.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/SkySmart.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/TheAirBlow.Solver.Library.csproj" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/obj/Debug/net6.0/TheAirBlow.Solver.Library.AssemblyInfo.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/obj/Debug/net6.0/TheAirBlow.Solver.Library.GeneratedMSBuildEditorConfig.editorconfig" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.Library/obj/Debug/net6.0/TheAirBlow.Solver.Library.GlobalUsings.g.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Controllers/ApiController.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Controllers/HomeController.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Controllers/SolverController.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Models/ErrorViewModel.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Program.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Properties/launchSettings.json" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/TheAirBlow.Solver.WebServer.csproj" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Home/API.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Home/API.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Home/Changelogs.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Home/Changelogs.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Home/Index.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Home/Index.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/Error.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/Error.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/_Layout.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/_Layout.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/_Layout.cshtml.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/_ValidationScriptsPartial.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Shared/_ValidationScriptsPartial.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Solver/QueueStatus.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Solver/QueueStatus.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Solver/View1.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Solver/View1.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Solver/View2.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/Solver/View2.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/_ViewImports.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/_ViewImports.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/_ViewStart.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/Views/_ViewStart.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/appsettings.Development.json" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/appsettings.json" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/fisting.zip" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/css/site.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/favicon.ico" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/js/site.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/LICENSE" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation/LICENSE.md" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation/dist/additional-methods.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation/dist/additional-methods.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation/dist/jquery.validate.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery/LICENSE.txt" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery/dist/jquery.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery/dist/jquery.min.js" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.WebServer/wwwroot/lib/jquery/dist/jquery.min.map" web="/" />
+            <mapping local="$PROJECT_DIR$/TheAirBlow.Solver.sln" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
